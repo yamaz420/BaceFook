@@ -2,9 +2,83 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>Title</title>
+  <title>Sign Up</title>
 </head>
 <body>
+
+  <div class="container">
+
+    <div class="card bg-light">
+      <article class="card-body mx-auto" style="max-width: 400px;">
+        <h4 class="card-title mt-3 text-center">Sign Up</h4>
+        <p>
+          <a href="" class="btn btn-block btn-twitter"> <i class="fab fa-twitter"></i>Sign Up via Twitter</a>
+          <a href="" class="btn btn-block btn-facebook"> <i class="fab fa-facebook-f"></i>Sign Up via facebook</a>
+        </p>
+        <p class="divider-text">
+          <span class="bg-light">OR</span>
+        </p>
+        <p id="formInstructions">Fields marked with (*) are required.</p>
+        <p th:text="${msg}"></p>
+        <form name="signup" th:action="@{/save-user}" th:object="${user}" method="POST">
+          <div class="form-group input-group">
+            <div class="input-group-prepend">
+              <span class="input-group-text"> <i class="fa fa-user"></i> </span>
+            </div>
+            <input type="text" class="form-control" placeholder="Username *" autocomplete="off" required
+              aria-required="true" aria-describedby="username-err" th:field="*{username}">
+            <!-- <span class="error" id="username-err"></span> -->
+          </div>
+          <div class="form-group input-group">
+            <div class="input-group-prepend">
+              <span class="input-group-text"> <i class="fa fa-lock"></i> </span>
+            </div>
+            <input id="password" name="password" class="form-control" type="password" placeholder="Password *" required
+              aria-required="true" th:field="*{password}">
+          </div>
+          <div class="form-group input-group">
+            <div class="input-group-prepend">
+              <span class="input-group-text"> <i class="fa fa-lock"></i> </span>
+            </div>
+            <!-- <input id="password_confirm" name="password_confirm" class="form-control" type="password"
+            placeholder="Confirm Password *" required aria-required="true" th:name="passwordConfirm"> -->
+            <input id="password_confirm" name="password_confirm" class="form-control" type="password"
+              placeholder="Confirm Password *" required aria-required="true">
+          </div>
+          <div class="form-group input-group">
+            <div class="input-group-prepend">
+              <span class="input-group-text"> <i class="fa fa-user"></i> </span>
+            </div>
+            <input class="form-control" type="text" placeholder="First Name" autocomplete="off" th:field="*{firstname}">
+          </div>
+          <div class="form-group input-group">
+            <div class="input-group-prepend">
+              <span class="input-group-text"> <i class="fa fa-user"></i> </span>
+            </div>
+            <input class="form-control" type="text" placeholder="Last Name" autocomplete="off" th:field="*{lastname}">
+          </div>
+          <div class="form-group input-group">
+            <div class="input-group-prepend">
+              <span class="input-group-text"> <i class="fa fa-envelope"></i> </span>
+            </div>
+            <input class="form-control" type="email" placeholder="Email" aria-describedby="emailHelp" autocomplete="off"
+              th:field="*{email}">
+          </div>
+          <div class="form-group input-group">
+            <div class="input-group-prepend">
+              <span class="input-group-text"> <i class="fa fa-user"></i> </span>
+            </div>
+            <input class="form-control" type="text" placeholder="Address" autocomplete="off" th:field="*{address}">
+          </div>
+          <div class="form-group">
+            <button type="submit" class="btn btn-primary btn-block"> Create Account</button>
+          </div>
+          <p class="text-center">Already have an account? <a href="/signin">Sign In</a></p>
+        </form>
+      </article>
+    </div>
+
+  </div>
 
 </body>
 </html>
