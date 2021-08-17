@@ -1,13 +1,20 @@
 package com.teamgreen.bacefook.entity;
 
+import javax.persistence.Column;
 import javax.persistence.MappedSuperclass;
 
 @MappedSuperclass
 public class Identity {
 
+  @Column(name = "first_name", nullable = false, length = 20)
   private String firstname;
+
+  @Column(name = "last_name", nullable = false, length = 20)
   private String lastname;
+
+  @Column(nullable = false, unique = true, length = 45)
   private String email;
+
   private String address;
 
   public Identity() {
