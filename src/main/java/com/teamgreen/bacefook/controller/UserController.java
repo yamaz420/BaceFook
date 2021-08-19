@@ -2,9 +2,11 @@ package com.teamgreen.bacefook.controller;
 
 import com.teamgreen.bacefook.entity.Post;
 import com.teamgreen.bacefook.entity.User;
+import com.teamgreen.bacefook.repository.UserRepository;
 import com.teamgreen.bacefook.service.PostService;
 import com.teamgreen.bacefook.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+//import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -19,8 +21,8 @@ public class UserController {
   @Autowired
   private UserService userService;
 
-  /*@Autowired
-  private PostService postService;*/
+  @Autowired
+  private PostService postService;
 
   /**************** ### Home ### ****************/
 
@@ -71,7 +73,7 @@ public class UserController {
                             @CookieValue("currentUser") String currentUser,
                             @PathVariable long id) {
     userService.findUserById(id);
-    /*model.addAttribute("posts", postService.findPostByAuthorIdCreatedDate(id));*/
+    model.addAttribute("posts", postService.findPostByAuthorIdCreatedDate(id));
     model.addAttribute("user", userService.findUserById(Long.parseLong(currentUser)));
     return "profile";
   }
@@ -120,15 +122,6 @@ public class UserController {
 
   /******************** Admin/Edit ********************/
 
-  /*@GetMapping("/admin")
-  public ModelAndView adminDashboard() {
-    ModelAndView mv = new ModelAndView();
-    mv.setViewName("admin");
-    List<User> users = userService.getAllUsers();
-    mv.addObject("users", users);
-    return mv;
-  }*/
-
   @GetMapping("/admin")
   public String adminDashboard(Model model, User user) {
     List<User> users = userService.findAllUsers();
@@ -156,9 +149,47 @@ public class UserController {
 
   @GetMapping("/delete/{id}")
   public String deleteUser(@PathVariable long id) {
-    /*postService.deletePostsByAuthorId(id);*/
+    postService.deletePostsByAuthorId(id);
     userService.deleteUser(id);
     return "redirect:/signout";
   }
 
 }
+
+//       TEMP
+
+//  @Autowired
+//  private UserRepository userRepo;
+//
+//  @GetMapping("/")
+//  public String viewHomePage() {
+//    return "index";
+//  }
+//
+//  @GetMapping("/register")
+//  public String showRegistrationForm(Model model) {
+//    model.addAttribute("user", new User());
+//
+//    return "signup_form";
+//  }
+//
+//  @PostMapping("/process_register")
+//  public String processRegister(User user) {
+//    BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
+//    String encodedPassword = passwordEncoder.encode(user.getPassword());
+//    user.setPassword(encodedPassword);
+//
+//    userRepo.save(user);
+//
+//    return "register_success";
+//  }
+//
+//  @GetMapping("/users")
+//  public String listUsers(Model model) {
+//    List<User> listUsers = userRepo.findAll();
+//    model.addAttribute("listUsers", listUsers);
+//
+//    return "users";
+//  }
+//
+//}
