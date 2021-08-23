@@ -6,17 +6,22 @@ import com.teamgreen.bacefook.repository.UserRepository;
 import com.teamgreen.bacefook.service.PostService;
 import com.teamgreen.bacefook.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
-//import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
-
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletResponse;
 import java.util.List;
 
 @Controller
 public class UserController {
+
+
+  /**************** ### Spring Security --> ### ****************/
+  @Autowired
+  private UserRepository userRepo;
+  /**************** ### <-- Spring Security ### ****************/
 
   @Autowired
   private UserService userService;
@@ -75,6 +80,7 @@ public class UserController {
     userService.findUserById(id);
     model.addAttribute("posts", postService.findPostByAuthorIdCreatedDate(id));
     model.addAttribute("user", userService.findUserById(Long.parseLong(currentUser)));
+    model.addAttribute("user", userService.findUserById(id));
     return "profile";
   }
 
@@ -154,42 +160,42 @@ public class UserController {
     return "redirect:/signout";
   }
 
-}
+  /**************** ### Spring Security --> ### ****************/
 
-//       TEMP
+//  In order to view pages restricted to "currentUser"-Cookies we have to comment the Cookies out
+//  from the methods above atm. Same goes for PostController.
 
-//  @Autowired
-//  private UserRepository userRepo;
-//
 //  @GetMapping("/")
 //  public String viewHomePage() {
 //    return "index";
 //  }
-//
-//  @GetMapping("/register")
-//  public String showRegistrationForm(Model model) {
-//    model.addAttribute("user", new User());
-//
-//    return "signup_form";
-//  }
-//
-//  @PostMapping("/process_register")
-//  public String processRegister(User user) {
-//    BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
-//    String encodedPassword = passwordEncoder.encode(user.getPassword());
-//    user.setPassword(encodedPassword);
-//
-//    userRepo.save(user);
-//
-//    return "register_success";
-//  }
-//
-//  @GetMapping("/users")
-//  public String listUsers(Model model) {
-//    List<User> listUsers = userRepo.findAll();
-//    model.addAttribute("listUsers", listUsers);
-//
-//    return "users";
-//  }
-//
-//}
+
+  @GetMapping("/register")
+  public String showRegistrationForm(Model model) {
+    model.addAttribute("user", new User());
+
+    return "signup_form";
+  }
+
+  @PostMapping("/process_register")
+  public String processRegister(User user) {
+    BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
+    String encodedPassword = passwordEncoder.encode(user.getPassword());
+    user.setPassword(encodedPassword);
+
+    userRepo.save(user);
+
+    return "register_success";
+  }
+
+  @GetMapping("/users")
+  public String listUsers(Model model) {
+    List<User> listUsers = userRepo.findAll();
+    model.addAttribute("listUsers", listUsers);
+
+    return "users";
+  }
+
+  /**************** <-- ### Spring Security ### ****************/
+
+}

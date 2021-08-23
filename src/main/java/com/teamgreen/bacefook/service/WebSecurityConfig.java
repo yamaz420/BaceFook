@@ -41,20 +41,37 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
   @Override
   protected void configure(AuthenticationManagerBuilder auth) throws Exception {
     auth.authenticationProvider(authenticationProvider());
+//    auth.inMemoryAuthentication()
+//      .withUser("user1").password(passwordEncoder().encode("user1Pass"))
+//      .authorities("USER")
+//      .and().withUser("admin").password(passwordEncoder().encode("adminPass"))
+//      .authorities("ADMIN");
   }
 
   @Override
   protected void configure(HttpSecurity http) throws Exception {
     http.authorizeRequests()
-            .antMatchers("/users").authenticated()
+//            .antMatchers("/profile/**").hasAnyAuthority("USER", "ADMIN")
+            .antMatchers("/users", "/profile/**").authenticated()
+//            .antMatchers("/*").permitAll()
+//            .anyRequest().authenticated()
             .anyRequest().permitAll()
             .and()
             .formLogin()
+//            .loginPage("/login.html")
+//            .loginProcessingUrl("/perform_login")
             .usernameParameter("email")
+//            .failureUrl("/index.html?error=true")
+//            .failureHandler(authenticationFailureHandler())
             .defaultSuccessUrl("/users")
             .permitAll()
             .and()
-            .logout().logoutSuccessUrl("/").permitAll();
+            .logout()
+//            .logoutUrl("/perform_logout")
+//            .deleteCookies("JSESSIONID")
+            .logoutSuccessUrl("/")
+//            .logoutSuccessHandler(logoutSuccessHandler())
+            .permitAll();
   }
 
 
