@@ -75,11 +75,11 @@ public class UserController {
 
   @GetMapping("/profile/{id}")
   public String showProfile(@ModelAttribute("post") Post post, Model model,
-                            @CookieValue("currentUser") String currentUser,
+//                            @CookieValue("currentUser") String currentUser,
                             @PathVariable long id) {
-    userService.findUserById(id);
+//    userService.findUserById(id);
     model.addAttribute("posts", postService.findPostByAuthorIdCreatedDate(id));
-    model.addAttribute("user", userService.findUserById(Long.parseLong(currentUser)));
+//    model.addAttribute("user", userService.findUserById(Long.parseLong(currentUser)));
     model.addAttribute("user", userService.findUserById(id));
     return "profile";
   }
@@ -182,6 +182,7 @@ public class UserController {
     BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
     String encodedPassword = passwordEncoder.encode(user.getPassword());
     user.setPassword(encodedPassword);
+    user.setImg("https://via.placeholder.com/150");
 
     userRepo.save(user);
 
