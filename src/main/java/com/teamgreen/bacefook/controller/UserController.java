@@ -116,6 +116,7 @@ public class UserController {
     return "signup";
   }
 
+
   /**************** ### Sign Out and Empty Cookie Value ### ****************/
 
   @GetMapping("/signout")
@@ -126,14 +127,23 @@ public class UserController {
     return "redirect:/";
   }
 
+  /**************** ### View All Profiles ### ****************/
+
+    @GetMapping("/profiles")
+    public String showProfiles(Model model, User user) {
+      List<User> users = userService.findAllUsers();
+      model.addAttribute("users", users);
+    return "profiles";
+  }
+
   /******************** Admin/Edit ********************/
 
-  @GetMapping("/admin")
-  public String adminDashboard(Model model, User user) {
-    List<User> users = userService.findAllUsers();
-    model.addAttribute("users", users);
-    return "admin";
-  }
+//  @GetMapping("/admin")
+//  public String adminDashboard(Model model, User user) {
+//    List<User> users = userService.findAllUsers();
+//    model.addAttribute("users", users);
+//    return "admin";
+//  }
 
   @GetMapping("/edit/{id}")
   public String editUser(Model model,

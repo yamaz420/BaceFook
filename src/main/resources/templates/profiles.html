@@ -1,9 +1,10 @@
 <!DOCTYPE html>
-<html class="no-js" lang="en">
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
 
 <head>
   <meta http-equiv="x-ua-compatible" content="ie=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
   <!-- Bootstrap -->
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-+0n0xVW2eSR5OomGNYDnhzAbDsOXxcvSN1TPprVMTNDbiYZCxYbOOl7+AMvyTG2x" crossorigin="anonymous">
@@ -15,7 +16,12 @@
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js" defer></script>
 
   <!-- FA -->
-   <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.8/css/all.css">
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.8/css/all.css">
+
+  <!-- dev -->
+  <script src="/js/main.js" defer></script>
+  <link rel="stylesheet" href="css/style.css">
+
   <title>welcome to dev connector</title>
 </head>
 
@@ -38,15 +44,15 @@
       Developers
     </h1>
     <p class="lead"><i class="fa fa-connectdevelop" aria-hidden="true"></i>Browse and connect with developers</p>
-    <div class="profiles">
+    <div class="profiles" th:each="user: ${users}">
       <div class="profile bg-light">
         <img class="round-img" src="../img/john.png" alt="">
 
 
         <div class="py-2">
-          <h2>John Doe</h2>
-          <p class="lead">Developer at Microsoft</p>
-          <p class="lead">sattle, WA</p>
+          <h2 th:text="${user.username}">John Doe</h2>
+          <p class="lead" th:text="${user.title}"></p>
+          <p class="lead" th:text="${user.address}"></p>
           <a href="profile.html" class="btn btn-primary">View Profile</a>
 
         </div>
@@ -58,32 +64,32 @@
           <li class="text-primary"><i class="fa fa-check"></i>Python</li>
         </ul>
       </div>
-      <div class="profile bg-light">
-        <img class="round-img" src="../img/john.png" alt="">
+<!--      <div class="profile bg-light">-->
+<!--        <img class="round-img" src="../img/john.png" alt="">-->
 
 
-        <div class="py-2">
-          <h2>John Doe</h2>
-          <p class="lead">Developer at Microsoft</p>
-          <p class="lead">sattle, WA</p>
-          <a href="profile.html" class="btn btn-primary">View Profile</a>
+<!--        <div class="py-2">-->
+<!--          <h2>John Doe</h2>-->
+<!--          <p class="lead">Developer at Microsoft</p>-->
+<!--          <p class="lead">sattle, WA</p>-->
+<!--          <a href="profile.html" class="btn btn-primary">View Profile</a>-->
 
-        </div>
+<!--        </div>-->
 
-        <ul>
-          <li class="text-primary"><i class="fa fa-check"></i>HTML</li>
-          <li class="text-primary"><i class="fa fa-check"></i>CSS</li>
-          <li class="text-primary"><i class="fa fa-check"></i>javascript</li>
-          <li class="text-primary"><i class="fa fa-check"></i>Python</li>
-        </ul>
-      </div>
+<!--        <ul>-->
+<!--          <li class="text-primary"><i class="fa fa-check"></i>HTML</li>-->
+<!--          <li class="text-primary"><i class="fa fa-check"></i>CSS</li>-->
+<!--          <li class="text-primary"><i class="fa fa-check"></i>javascript</li>-->
+<!--          <li class="text-primary"><i class="fa fa-check"></i>Python</li>-->
+<!--        </ul>-->
+<!--      </div>-->
 
     </div>
   </section>
 
-  <script src="js/jquery.min.js"></script>
-  <script src="js/popper.min.js"></script>
-  <script src="js/bootstrap.min.js"></script>
+<!--  <script src="js/jquery.min.js"></script>-->
+<!--  <script src="js/popper.min.js"></script>-->
+<!--  <script src="js/bootstrap.min.js"></script>-->
 </body>
 
 </html>

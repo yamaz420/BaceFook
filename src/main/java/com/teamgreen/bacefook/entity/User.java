@@ -17,6 +17,7 @@ public class User extends Identity {
   private String password;
   private String salt;
   private String img;
+  private String title;
 
   public User() {
   }
@@ -59,6 +60,14 @@ public class User extends Identity {
 
   public void setImg(String img) {
     this.img = img;
+  }
+
+  public String getTitle() {
+    return title;
+  }
+
+  public void setTitle(String title) {
+    this.title = title;
   }
 
 }

@@ -1,9 +1,10 @@
 <!DOCTYPE html>
-<html class="no-js" lang="en">
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
 
 <head>
   <meta http-equiv="x-ua-compatible" content="ie=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
   <!-- Bootstrap -->
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-+0n0xVW2eSR5OomGNYDnhzAbDsOXxcvSN1TPprVMTNDbiYZCxYbOOl7+AMvyTG2x" crossorigin="anonymous">
@@ -15,7 +16,12 @@
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js" defer></script>
 
   <!-- FA -->
-   <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.8/css/all.css">
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.8/css/all.css">
+
+  <!-- dev -->
+  <script src="/js/main.js" defer></script>
+  <link rel="stylesheet" href="css/style.css">
+
   <title>welcome to dev connector</title>
 </head>
 
@@ -34,9 +40,9 @@
     </ul>
   </div>
   <section class="container">
-    <div class="alert alert-danger">
-      Invalid credantials
-    </div>
+<!--    <div class="alert alert-danger">-->
+<!--      Invalid credantials-->
+<!--    </div>-->
     <h1 class="targe text-primary">
       Sign In
     </h1>
@@ -44,23 +50,23 @@
       <i class="fa fa-user"></i>Login to Your Account
 
     </p>
-    <form action="" class="form">
+    <form name="signin" class="form" th:action="@{/authenticate-user}" method="POST">
 
       <div class="form-group">
-        <input type="email" placeholder="Email address">
+        <input id="usernameInput" class="form-control" type="text" placeholder="Username" th:name="username">
         <small class="form-text">validation message</small>
       </div>
 
       <div class="form-group">
-        <input type="password" placeholder="Password">
+        <input id="passwordInput" class="form-control" type="password" placeholder="Password" th:name="password">
       </div>
       <input type="submit" value="register" class="btn btn-primary">
     </form>
   </section>
 
-  <script src="js/jquery.min.js"></script>
-  <script src="js/popper.min.js"></script>
-  <script src="js/bootstrap.min.js"></script>
+<!--  <script src="js/jquery.min.js"></script>-->
+<!--  <script src="js/popper.min.js"></script>-->
+<!--  <script src="js/bootstrap.min.js"></script>-->
 </body>
 
 </html>
