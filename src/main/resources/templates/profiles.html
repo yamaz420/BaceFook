@@ -53,7 +53,7 @@
           <h2 th:text="${user.username}">John Doe</h2>
           <p class="lead" th:text="${user.title}"></p>
           <p class="lead" th:text="${user.address}"></p>
-          <a href="profile.html" class="btn btn-primary">View Profile</a>
+          <a th:href="@{'/profile/' + ${user.id}}" class="btn btn-primary">View Profile</a>
 
         </div>
 
