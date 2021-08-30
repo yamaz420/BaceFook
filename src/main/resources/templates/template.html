@@ -37,13 +37,16 @@
         </a>
       </h1>
       <ul>
+        <li><a th:href="@{'/posts'}">Posts</a></li>
         <li><a th:href="@{'/profiles'}">Developers</a></li>
+        <li><a th:href="@{'/profile/' + ${user.id}}">Profile</a></li>
         <li><a th:href="@{'/signout'}">Sign Out</a></li>
       </ul>
     </div>
   </nav>
 
   <!--NavBar if User is NOT logged in-->
+
   <div class="nav-2">
     <div class="nav navbar bg-dark">
       <h1>

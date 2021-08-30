@@ -44,7 +44,12 @@ public class UserController {
   /**************** ### Authenticate, Sign In and Create Cookie ### ****************/
 
   @GetMapping("/signin")
-  public String signIn(@ModelAttribute("user") User user) {
+  public String signIn(@ModelAttribute("user") User user, Model model,
+                       @CookieValue(value = "currentUser", required = false) String currentUser) {
+    if (currentUser != null && currentUser != "") {
+      model.addAttribute("user", userService.findUserById(Long.parseLong(currentUser)));
+      return "signin";
+    }
     return "signin";
   }
 
@@ -73,21 +78,44 @@ public class UserController {
 
   /**************** ### User Profile based on Cookie and Id Values ### ****************/
 
+//  @GetMapping("/profile/{id}")
+//  public String showProfile(@ModelAttribute("post") Post post, Model model,
+////                            @CookieValue("currentUser") String currentUser,
+//                            @PathVariable long id) {
+//    model.addAttribute("posts", postService.findPostByAuthorIdCreatedDate(id));
+////    model.addAttribute("user", userService.findUserById(Long.parseLong(currentUser)));
+//    model.addAttribute("user", userService.findUserById(id));
+//    return "profile";
+//  }
+
   @GetMapping("/profile/{id}")
-  public String showProfile(@ModelAttribute("post") Post post, Model model,
-//                            @CookieValue("currentUser") String currentUser,
+  public String showProfile(@ModelAttribute("user")User user, Post post, Model model,
+                            @CookieValue(value = "currentUser", required = false) String currentUser,
                             @PathVariable long id) {
-//    userService.findUserById(id);
-    model.addAttribute("posts", postService.findPostByAuthorIdCreatedDate(id));
-//    model.addAttribute("user", userService.findUserById(Long.parseLong(currentUser)));
+//    String username = user.getUsername();
+//    String usersname = userService.findUserByUsername(username);
+    if (currentUser != null && currentUser != "") {
+      model.addAttribute("posts", postService.findPostByAuthorIdCreatedDate(id));
+      model.addAttribute("user", userService.findUserById(Long.parseLong(currentUser)));
+//      System.out.println(username);
+      return "profile";
+    }
     model.addAttribute("user", userService.findUserById(id));
+//    System.out.println(username);
     return "profile";
   }
 
   /**************** ### Sign Up and Save User to Database ### ****************/
 
   @GetMapping("/signup")
-  public String signUp(@ModelAttribute("user") User user) {
+  public String signUp(@ModelAttribute("user") User user, Model model,
+                       @CookieValue(value = "currentUser", required = false) String currentUser) {
+    if (currentUser != null && currentUser != "") {
+      model.addAttribute("user", userService.findUserById(Long.parseLong(currentUser)));
+//      System.out.println(user.getUsername());
+      return "redirect:/";
+    }
+//    System.out.println(user.getUsername());
     return "signup";
   }
 
@@ -129,10 +157,22 @@ public class UserController {
 
   /**************** ### View All Profiles ### ****************/
 
-    @GetMapping("/profiles")
-    public String showProfiles(Model model, User user) {
-      List<User> users = userService.findAllUsers();
-      model.addAttribute("users", users);
+//    @GetMapping("/profiles")
+//    public String showProfiles(Model model, User user) {
+//      List<User> users = userService.findAllUsers();
+//      model.addAttribute("users", users);
+//    return "profiles";
+//  }
+
+  @GetMapping("/profiles")
+  public String showProfiles(@ModelAttribute("user") User user, Model model,
+                             @CookieValue(value = "currentUser", required = false) String currentUser) {
+    List<User> users = userService.findAllUsers();
+    model.addAttribute("users", users);
+    if (currentUser != null && currentUser != "") {
+      model.addAttribute("user", userService.findUserById(Long.parseLong(currentUser)));
+      return "profiles";
+    }
     return "profiles";
   }
 

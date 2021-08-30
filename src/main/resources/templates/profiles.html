@@ -26,7 +26,7 @@
     <p class="lead"><i class="fa fa-connectdevelop" aria-hidden="true"></i>Browse and connect with developers</p>
     <div class="profiles" th:each="user: ${users}">
       <div class="profile bg-light">
-        <img class="round-img" src="../img/john.png" alt="">
+        <img class="round-img" th:src="@{${user.img}}" alt="">
 
 
         <div class="py-2">
@@ -46,30 +46,9 @@
       </div>
       <!--      <div class="profile bg-light">-->
       <!--        <img class="round-img" src="../img/john.png" alt="">-->
-
-
-      <!--        <div class="py-2">-->
-      <!--          <h2>John Doe</h2>-->
-      <!--          <p class="lead">Developer at Microsoft</p>-->
-      <!--          <p class="lead">sattle, WA</p>-->
-      <!--          <a href="profile.html" class="btn btn-primary">View Profile</a>-->
-
-      <!--        </div>-->
-
-      <!--        <ul>-->
-      <!--          <li class="text-primary"><i class="fa fa-check"></i>HTML</li>-->
-      <!--          <li class="text-primary"><i class="fa fa-check"></i>CSS</li>-->
-      <!--          <li class="text-primary"><i class="fa fa-check"></i>javascript</li>-->
-      <!--          <li class="text-primary"><i class="fa fa-check"></i>Python</li>-->
-      <!--        </ul>-->
-      <!--      </div>-->
-
     </div>
   </section>
 
-  <!--  <script src="js/jquery.min.js"></script>-->
-  <!--  <script src="js/popper.min.js"></script>-->
-  <!--  <script src="js/bootstrap.min.js"></script>-->
 </body>
 
 </html>

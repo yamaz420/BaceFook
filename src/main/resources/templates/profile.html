@@ -6,21 +6,21 @@
   <!--/*/ <th:block th:include="template.html :: head">
         </th:block> /*/-->
 
-  <title>welcome to dev connector</title>
+  <title>Profile</title>
 </head>
 
 <body>
 
-  <th:block th:if="${user.id}">
+  <th:block th:if="${user.username != null}">
     <nav th:include="template.html :: nav"></nav>
   </th:block>
 
-  <th:block th:if="${user.id == 0}">
+  <th:block th:if="${user.username == null}">
     <nav th:include="template.html :: div.nav-2"></nav>
   </th:block>
 
   <section class="container">
-    <a href="profiles.html" class="btn">Back To Profiles</a>
+    <a th:href="@{'/profiles'}" class="btn">Back To Profiles</a>
     <div class="profile-grid my-1">
       <div class="profile-top bg-light p-2">
         <!--        <img class="round-img" src="../img/john.png" alt="">-->
