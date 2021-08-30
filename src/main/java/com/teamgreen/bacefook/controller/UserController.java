@@ -71,7 +71,7 @@ public class UserController {
   }
 
   @GetMapping("/authError")
-  public String authError(Model model) {
+  public String authError(User user, Model model) {
     model.addAttribute("msg", "The username and password you entered is incorrect. No Account? Sign Up using the link below.");
     return "signin";
   }

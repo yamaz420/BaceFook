@@ -24,7 +24,7 @@ public class PostController {
   /******************** Start ********************/
 
   @GetMapping("/posts")
-  public String allPosts(@ModelAttribute("post") Post post, Model model,
+  public String allPosts(@ModelAttribute("post") Post post, User user, Model model,
                          @CookieValue(value = "currentUser", required = false) String currentUser) {
     if (currentUser != null) {
       model.addAttribute("posts", postService.findPostsByCreatedDate());
