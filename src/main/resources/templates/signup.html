@@ -2,43 +2,23 @@
 <html xmlns:th="http://www.thymeleaf.org" lang="en">
 
 <head>
-  <meta http-equiv="x-ua-compatible" content="ie=edge">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-  <!-- Bootstrap -->
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/css/bootstrap.min.css" rel="stylesheet"
-        integrity="sha384-+0n0xVW2eSR5OomGNYDnhzAbDsOXxcvSN1TPprVMTNDbiYZCxYbOOl7+AMvyTG2x" crossorigin="anonymous">
-  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/js/bootstrap.bundle.min.js"
-          integrity="sha384-gtEjrD/SeCtmISkJkNUaaKMoLD0//ElJ19smozuHV6z3Iehds+3Ulb9Bn9Plx0x4" crossorigin="anonymous" defer>
-  </script>
-
-  <!-- jQuery -->
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js" defer></script>
-
-  <!-- FA -->
-  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.8/css/all.css">
-
-  <!-- dev -->
-  <script src="/js/main.js" defer></script>
-  <link rel="stylesheet" href="css/style.css">
+  <!--/*/ <th:block th:include="template.html :: head">
+        </th:block> /*/-->
 
   <title>welcome to dev connector</title>
 </head>
 
 <body>
-  <div class=" nav navbar bg-dark">
-    <h1>
-      <a href="index.html">
-        <i class="fa fa-code"></i>DevConnector
-      </a>
-    </h1>
-    <ul>
-      <li><a href="profiles.html">Developers</a></li>
-      <li><a href="register.html">Register</a></li>
-      <li><a href="login.html">Login</a></li>
 
-    </ul>
-  </div>
+  <th:block th:if="${user.id}">
+    <nav th:include="template.html :: nav"></nav>
+  </th:block>
+
+  <th:block th:if="${user.id == 0}">
+    <nav th:include="template.html :: div.nav-2"></nav>
+  </th:block>
+
   <section class="container">
     <h1 class="targe text-primary">
       Sign Up
@@ -60,32 +40,32 @@
       </div>
       <div class="form-group">
         <input class="form-control" type="email" placeholder="Email" aria-describedby="emailHelp" autocomplete="off"
-           th:field="*{email}">
+          th:field="*{email}">
       </div>
       <div class="form-group">
         <input class="form-control" type="text" placeholder="Title" aria-describedby="emailHelp" autocomplete="off"
-           th:field="*{title}">
+          th:field="*{title}">
       </div>
       <div class="form-group">
         <input class="form-control" type="text" placeholder="City" aria-describedby="emailHelp" autocomplete="off"
-               th:field="*{address}">
+          th:field="*{address}">
       </div>
 
       <div class="form-group">
         <input id="password" name="password" class="form-control" type="password" placeholder="Password *" required
-           aria-required="true" th:field="*{password}">
+          aria-required="true" th:field="*{password}">
       </div>
       <div class="form-group">
         <input id="password_confirm" name="password_confirm" class="form-control" type="password"
-           placeholder="Confirm Password *" required aria-required="true">
+          placeholder="Confirm Password *" required aria-required="true">
       </div>
       <input type="submit" value="Sign Up" class="btn btn-primary">
     </form>
   </section>
 
-<!--  <script src="js/jquery.min.js"></script>-->
-<!--  <script src="js/popper.min.js"></script>-->
-<!--  <script src="js/bootstrap.min.js"></script>-->
+  <!--  <script src="js/jquery.min.js"></script>-->
+  <!--  <script src="js/popper.min.js"></script>-->
+  <!--  <script src="js/bootstrap.min.js"></script>-->
 </body>
 
 </html>

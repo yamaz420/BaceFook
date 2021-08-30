@@ -11,12 +11,18 @@
 
 <body>
 
-  <nav th:include="template.html :: nav"></nav>
+  <th:block th:if="${user.id}">
+    <nav th:include="template.html :: nav"></nav>
+  </th:block>
+
+  <th:block th:if="${user.id == 0}">
+    <nav th:include="template.html :: div.nav-2"></nav>
+  </th:block>
 
   <section class="container">
-<!--    <div class="alert alert-danger">-->
-<!--      Invalid credantials-->
-<!--    </div>-->
+    <!--    <div class="alert alert-danger">-->
+    <!--      Invalid credantials-->
+    <!--    </div>-->
     <h1 class="targe text-primary">
       Sign In
     </h1>
