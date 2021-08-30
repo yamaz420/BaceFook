@@ -78,6 +78,8 @@
     <input class="btn btn-primary btn-block" type="submit" value="Submit Post">
   </form>
 
+<!--  <div th:object="${session.user}" th:include="template.html :: div.post"></div>-->
+
   <div class="row mb-2">
     <div class="col-md-6" th:each="post:${posts}">
       <div class="card flex-md-row mb-4 box-shadow h-md-250">

@@ -1,5 +1,4 @@
 <!DOCTYPE html>
-<!--<html class="no-js" lang="en">-->
 <html xmlns:th="http://www.thymeleaf.org" lang="en">
 
 <head>
@@ -7,40 +6,31 @@
   <!--/*/ <th:block th:include="template.html :: head">
         </th:block> /*/-->
 
-  <title>welcome to dev connector</title>
+  <title>DevConnector</title>
 </head>
 
 <body>
 
-  <nav th:include="template.html :: nav"></nav>
+  <th:block th:if="${user.id}">
+    <nav th:include="template.html :: nav"></nav>
+  </th:block>
 
-  <section class="landing" th:include="template.html :: section"></section>
+  <th:block th:if="${user.id == 0}">
+    <nav th:include="template.html :: div.nav-2"></nav>
+  </th:block>
 
-<!--  <div class=" nav navbar bg-dark">-->
-<!--    <h1>-->
-<!--      <a href="index.html">-->
-<!--        <i class="fa fa-code"></i>DevConnector-->
-<!--      </a>-->
-<!--    </h1>-->
-<!--    <ul>-->
-<!--      <li><a th:href="@{'/profiles'}">Developers</a></li>-->
-<!--      <li><a th:if="${user.id == 0}" th:href="@{'/signup'}">Sign Up</a></li>-->
-<!--      <li><a th:if="${user.id == 0}" th:href="@{'/signin'}">Sign In</a></li>-->
-<!--    </ul>-->
-<!--  </div>-->
-
-<!--  <section class="landing">-->
-<!--    <div class="dark-overlay">-->
-<!--      <div class="landing-inner">-->
-<!--        <h1 class="x-large">Developer Connector</h1>-->
-<!--        <p class="lead">Create developer profile,share post and help each other</p>-->
-<!--        <div class="buttons">-->
-<!--          <a th:href="@{'/signup'}" class="btn btn-primary">Sign Up</a>-->
-<!--          <a th:href="@{'/signin'}" class="btn btn">Sign In</a>-->
-<!--        </div>-->
-<!--      </div>-->
-<!--    </div>-->
-<!--  </section>-->
+  <section class="landing">
+    <div class="dark-overlay">
+      <div class="landing-inner">
+        <h1 class="x-large">Developer Connector</h1>
+        <p class="lead">Create developer profile,share post and help each other</p>
+        <div class="buttons">
+          <a th:if="${user.id == 0}" th:href="@{'/signup'}" class="btn btn-primary">Sign Up</a>
+          <a th:if="${user.id == 0}" th:href="@{'/signin'}" class="btn btn">Sign In</a>
+        </div>
+      </div>
+    </div>
+  </section>
 
 </body>
 

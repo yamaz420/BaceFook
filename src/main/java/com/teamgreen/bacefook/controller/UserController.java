@@ -170,6 +170,18 @@ public class UserController {
     return "redirect:/signout";
   }
 
+  /**************** ### Template ### ****************/
+
+  @GetMapping("/template")
+  public String template(@ModelAttribute("user") User user, Model model,
+                         @CookieValue(value = "currentUser", required = false) String currentUser) {
+    if (currentUser != null && currentUser != "") {
+      model.addAttribute("user", userService.findUserById(Long.parseLong(currentUser)));
+      return "index";
+    }
+    return "index";
+  }
+
   /**************** ### Spring Security --> ### ****************/
 
 //  In order to view pages restricted to "currentUser"-Cookies we have to comment the Cookies out
@@ -180,32 +192,32 @@ public class UserController {
 //    return "index";
 //  }
 
-  @GetMapping("/register")
-  public String showRegistrationForm(Model model) {
-    model.addAttribute("user", new User());
+//  @GetMapping("/register")
+//  public String showRegistrationForm(Model model) {
+//    model.addAttribute("user", new User());
+//
+//    return "signup_form";
+//  }
 
-    return "signup_form";
-  }
+//  @PostMapping("/process_register")
+//  public String processRegister(User user) {
+//    BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
+//    String encodedPassword = passwordEncoder.encode(user.getPassword());
+//    user.setPassword(encodedPassword);
+//    user.setImg("https://via.placeholder.com/150");
+//
+//    userRepo.save(user);
+//
+//    return "register_success";
+//  }
 
-  @PostMapping("/process_register")
-  public String processRegister(User user) {
-    BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
-    String encodedPassword = passwordEncoder.encode(user.getPassword());
-    user.setPassword(encodedPassword);
-    user.setImg("https://via.placeholder.com/150");
-
-    userRepo.save(user);
-
-    return "register_success";
-  }
-
-  @GetMapping("/users")
-  public String listUsers(Model model) {
-    List<User> listUsers = userRepo.findAll();
-    model.addAttribute("listUsers", listUsers);
-
-    return "users";
-  }
+//  @GetMapping("/users")
+//  public String listUsers(Model model) {
+//    List<User> listUsers = userRepo.findAll();
+//    model.addAttribute("listUsers", listUsers);
+//
+//    return "users";
+//  }
 
   /**************** <-- ### Spring Security ### ****************/
 
