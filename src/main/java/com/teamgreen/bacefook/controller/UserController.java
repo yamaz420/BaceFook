@@ -44,7 +44,7 @@ public class UserController {
   /**************** ### Authenticate, Sign In and Create Cookie ### ****************/
 
   @GetMapping("/signin")
-  public String signIn() {
+  public String signIn(@ModelAttribute("user") User user) {
     return "signin";
   }
 
@@ -172,17 +172,9 @@ public class UserController {
 
   /**************** ### Template ### ****************/
 
-  @GetMapping("/template")
-  public String template(@ModelAttribute("user") User user, Model model,
-                         @CookieValue(value = "currentUser", required = false) String currentUser) {
-    if (currentUser != null && currentUser != "") {
-      model.addAttribute("user", userService.findUserById(Long.parseLong(currentUser)));
-      return "index";
-    }
-    return "index";
-  }
+//  Code goes here
 
-  /**************** ### Spring Security --> ### ****************/
+  /**************** ### Spring Security ### ****************/
 
 //  In order to view pages restricted to "currentUser"-Cookies we have to comment the Cookies out
 //  from the methods above atm. Same goes for PostController.
@@ -218,7 +210,5 @@ public class UserController {
 //
 //    return "users";
 //  }
-
-  /**************** <-- ### Spring Security ### ****************/
 
 }
