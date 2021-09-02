@@ -44,7 +44,12 @@ IntelliJ - IDE used
 
 ## Collaborators:
 Marcus Mobark - tech lead - lead author
-Haris Nezirevic
-Erik Torres Puente
-Erik Johnsson
-Hajk Karufanian
+ 
+ Haris Nezirevic
+ 
+ Erik Torres Puente
+  
+ Erik Johnsson
+  
+ Hajk Karufanian
+ 
