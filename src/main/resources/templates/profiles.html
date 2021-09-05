@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+
+<head>
+
+  <!--/*/ <th:block th:include="template.html :: head">
+        </th:block> /*/-->
+
+  <title>welcome to dev connector</title>
+</head>
+
+<body>
+
+  <th:block th:if="${user.id}">
+    <nav th:include="template.html :: nav"></nav>
+  </th:block>
+
+  <th:block th:if="${user.id == 0}">
+    <nav th:include="template.html :: div.nav-2"></nav>
+  </th:block>
+
+  <section class="container">
+    <h1 class="large text-primary">
+      Developers
+    </h1>
+    <p class="lead"><i class="fa fa-connectdevelop" aria-hidden="true"></i>Browse and connect with developers</p>
+    <div class="profiles" th:each="user: ${users}">
+      <div class="profile bg-light">
+        <img class="round-img" th:src="@{${user.img}}" alt="">
+
+
+        <div class="py-2">
+          <h2 th:text="${user.username}">John Doe</h2>
+          <p class="lead" th:text="${user.title}"></p>
+          <p class="lead" th:text="${user.address}"></p>
+          <a th:href="@{'/profile/' + ${user.id}}" class="btn btn-primary">View Profile</a>
+
+        </div>
+
+        <ul>
+          <li class="text-primary"><i class="fa fa-check"></i>HTML</li>
+          <li class="text-primary"><i class="fa fa-check"></i>CSS</li>
+          <li class="text-primary"><i class="fa fa-check"></i>javascript</li>
+          <li class="text-primary"><i class="fa fa-check"></i>Python</li>
+        </ul>
+      </div>
+      <!--      <div class="profile bg-light">-->
+      <!--        <img class="round-img" src="../img/john.png" alt="">-->
+    </div>
+  </section>
+
+</body>
+
+</html>

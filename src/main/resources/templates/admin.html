@@ -1,10 +1,49 @@
 <!DOCTYPE html>
-<html lang="en">
+<html xmlns:th="https://www.thymeleaf.org" lang="en">
+
 <head>
-  <meta charset="UTF-8">
-  <title>Posts</title>
+
+  <!--/*/ <th:block th:include="template.html :: head">
+        </th:block> /*/-->
+
+  <title>Admin Dashboard</title>
 </head>
+
 <body>
 
+  <th:block th:if="${user.id}">
+    <nav th:include="template.html :: nav"></nav>
+  </th:block>
+
+  <th:block th:if="${user.id == 0}">
+    <nav th:include="template.html :: div.nav-2"></nav>
+  </th:block>
+
+  <h1>Users In Database</h1>
+
+  <table>
+    <thead>
+      <tr>
+        <th>ID</th>
+        <th>Username</th>
+        <th>Address</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr th:each="user: ${users}">
+        <td th:text="${user.id}"></td>
+        <td th:text="${user.username}"></td>
+        <td th:text="${user.address}"></td>
+        <td>
+          <a th:href="@{'/edit/' + ${user.id}}">Update</a>
+        </td>
+        <td>
+          <a th:href="@{'/delete/' + ${user.id}}">Delete</a>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+
 </body>
+
 </html>

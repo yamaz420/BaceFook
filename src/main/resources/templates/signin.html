@@ -1,10 +1,50 @@
 <!DOCTYPE html>
-<html lang="en">
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+
 <head>
-  <meta charset="UTF-8">
-  <title>Posts</title>
+
+  <!--/*/ <th:block th:include="template.html :: head">
+        </th:block> /*/-->
+
+  <title>Sign In</title>
 </head>
+
 <body>
 
+  <th:block th:if="${user.id}">
+    <nav th:include="template.html :: nav"></nav>
+  </th:block>
+
+  <th:block th:if="${user.id == 0}">
+    <nav th:include="template.html :: div.nav-2"></nav>
+  </th:block>
+
+  <section class="container">
+    <!--    <div class="alert alert-danger">-->
+    <!--      Invalid credantials-->
+    <!--    </div>-->
+    <h1 class="targe text-primary">
+      Sign In
+    </h1>
+    <p class="lead">
+      <i class="fa fa-user"></i>Login to Your Account
+    </p>
+    <p th:text="${msg}"></p>
+    <form name="signin" class="form" th:action="@{/authenticate-user}" method="POST">
+
+      <div class="form-group">
+        <input id="usernameInput" class="form-control" type="text" placeholder="Username" th:name="username">
+<!--        <small class="form-text">validation message</small>-->
+      </div>
+
+      <div class="form-group">
+        <input id="passwordInput" class="form-control" type="password" placeholder="Password" th:name="password">
+      </div>
+      <input type="submit" value="Sign In" class="btn btn-primary">
+    </form>
+    <a th:href="@{'/signup'}">Sign Up</a>
+  </section>
+
 </body>
+
 </html>

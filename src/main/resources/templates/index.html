@@ -1,10 +1,37 @@
 <!DOCTYPE html>
-<html lang="en">
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+
 <head>
-  <meta charset="UTF-8">
-  <title>Posts</title>
+
+  <!--/*/ <th:block th:include="template.html :: head">
+        </th:block> /*/-->
+
+  <title>DevConnector</title>
 </head>
+
 <body>
 
+  <th:block th:if="${user.id}">
+    <nav th:include="template.html :: nav"></nav>
+  </th:block>
+
+  <th:block th:if="${user.id == 0}">
+    <nav th:include="template.html :: div.nav-2"></nav>
+  </th:block>
+
+  <section class="landing">
+    <div class="dark-overlay">
+      <div class="landing-inner">
+        <h1 class="x-large">Developer Connector</h1>
+        <p class="lead">Create developer profile,share post and help each other</p>
+        <div class="buttons">
+          <a th:if="${user.id == 0}" th:href="@{'/signup'}" class="btn btn-primary">Sign Up</a>
+          <a th:if="${user.id == 0}" th:href="@{'/signin'}" class="btn btn">Sign In</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
 </body>
+
 </html>

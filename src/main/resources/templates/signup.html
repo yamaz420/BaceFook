@@ -1,10 +1,71 @@
 <!DOCTYPE html>
-<html lang="en">
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+
 <head>
-  <meta charset="UTF-8">
-  <title>Posts</title>
+
+  <!--/*/ <th:block th:include="template.html :: head">
+        </th:block> /*/-->
+
+  <title>welcome to dev connector</title>
 </head>
+
 <body>
 
+  <th:block th:if="${user.id}">
+    <nav th:include="template.html :: nav"></nav>
+  </th:block>
+
+  <th:block th:if="${user.id == 0}">
+    <nav th:include="template.html :: div.nav-2"></nav>
+  </th:block>
+
+  <section class="container">
+    <h1 class="targe text-primary">
+      Sign Up
+    </h1>
+    <p class="lead">
+      <i class="fa fa-user"></i>Create Your Account
+
+    </p>
+    <form name="signup" class="form" th:action="@{/save-user}" th:object="${user}" method="POST">
+      <div class="form-group">
+        <input class="form-control" type="text" placeholder="First Name" autocomplete="off" th:field="*{firstname}">
+      </div>
+      <div class="form-group">
+        <input class="form-control" type="text" placeholder="Last Name" autocomplete="off" th:field="*{lastname}">
+      </div>
+      <div class="form-group">
+        <input type="text" class="form-control" placeholder="Username *" autocomplete="off" required
+          aria-required="true" aria-describedby="username-err" th:field="*{username}">
+      </div>
+      <div class="form-group">
+        <input class="form-control" type="email" placeholder="Email" aria-describedby="emailHelp" autocomplete="off"
+          th:field="*{email}">
+      </div>
+      <div class="form-group">
+        <input class="form-control" type="text" placeholder="Title" aria-describedby="emailHelp" autocomplete="off"
+          th:field="*{title}">
+      </div>
+      <div class="form-group">
+        <input class="form-control" type="text" placeholder="City" aria-describedby="emailHelp" autocomplete="off"
+          th:field="*{address}">
+      </div>
+
+      <div class="form-group">
+        <input id="password" name="password" class="form-control" type="password" placeholder="Password *" required
+          aria-required="true" th:field="*{password}">
+      </div>
+      <div class="form-group">
+        <input id="password_confirm" name="password_confirm" class="form-control" type="password"
+          placeholder="Confirm Password *" required aria-required="true">
+      </div>
+      <input type="submit" value="Sign Up" class="btn btn-primary">
+    </form>
+  </section>
+
+  <!--  <script src="js/jquery.min.js"></script>-->
+  <!--  <script src="js/popper.min.js"></script>-->
+  <!--  <script src="js/bootstrap.min.js"></script>-->
 </body>
+
 </html>

@@ -2,13 +2,14 @@ package com.teamgreen.bacefook.controller;
 
 import com.teamgreen.bacefook.entity.Post;
 import com.teamgreen.bacefook.entity.User;
+import com.teamgreen.bacefook.repository.UserRepository;
 import com.teamgreen.bacefook.service.PostService;
 import com.teamgreen.bacefook.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
-
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletResponse;
 import java.util.List;
@@ -16,11 +17,17 @@ import java.util.List;
 @Controller
 public class UserController {
 
+
+  /**************** ### Spring Security --> ### ****************/
+  @Autowired
+  private UserRepository userRepo;
+  /**************** ### <-- Spring Security ### ****************/
+
   @Autowired
   private UserService userService;
 
-  /*@Autowired
-  private PostService postService;*/
+  @Autowired
+  private PostService postService;
 
   /**************** ### Home ### ****************/
 
@@ -37,7 +44,12 @@ public class UserController {
   /**************** ### Authenticate, Sign In and Create Cookie ### ****************/
 
   @GetMapping("/signin")
-  public String signIn() {
+  public String signIn(@ModelAttribute("user") User user, Model model,
+                       @CookieValue(value = "currentUser", required = false) String currentUser) {
+    if (currentUser != null && currentUser != "") {
+      model.addAttribute("user", userService.findUserById(Long.parseLong(currentUser)));
+      return "signin";
+    }
     return "signin";
   }
 
@@ -59,27 +71,51 @@ public class UserController {
   }
 
   @GetMapping("/authError")
-  public String authError(Model model) {
+  public String authError(User user, Model model) {
     model.addAttribute("msg", "The username and password you entered is incorrect. No Account? Sign Up using the link below.");
     return "signin";
   }
 
   /**************** ### User Profile based on Cookie and Id Values ### ****************/
 
+//  @GetMapping("/profile/{id}")
+//  public String showProfile(@ModelAttribute("post") Post post, Model model,
+////                            @CookieValue("currentUser") String currentUser,
+//                            @PathVariable long id) {
+//    model.addAttribute("posts", postService.findPostByAuthorIdCreatedDate(id));
+////    model.addAttribute("user", userService.findUserById(Long.parseLong(currentUser)));
+//    model.addAttribute("user", userService.findUserById(id));
+//    return "profile";
+//  }
+
   @GetMapping("/profile/{id}")
-  public String showProfile(@ModelAttribute("post") Post post, Model model,
-                            @CookieValue("currentUser") String currentUser,
+  public String showProfile(@ModelAttribute("user")User user, Post post, Model model,
+                            @CookieValue(value = "currentUser", required = false) String currentUser,
                             @PathVariable long id) {
-    userService.findUserById(id);
-    /*model.addAttribute("posts", postService.findPostByAuthorIdCreatedDate(id));*/
-    model.addAttribute("user", userService.findUserById(Long.parseLong(currentUser)));
+//    String username = user.getUsername();
+//    String usersname = userService.findUserByUsername(username);
+    if (currentUser != null && currentUser != "") {
+      model.addAttribute("posts", postService.findPostByAuthorIdCreatedDate(id));
+      model.addAttribute("user", userService.findUserById(Long.parseLong(currentUser)));
+//      System.out.println(username);
+      return "profile";
+    }
+    model.addAttribute("user", userService.findUserById(id));
+//    System.out.println(username);
     return "profile";
   }
 
   /**************** ### Sign Up and Save User to Database ### ****************/
 
   @GetMapping("/signup")
-  public String signUp(@ModelAttribute("user") User user) {
+  public String signUp(@ModelAttribute("user") User user, Model model,
+                       @CookieValue(value = "currentUser", required = false) String currentUser) {
+    if (currentUser != null && currentUser != "") {
+      model.addAttribute("user", userService.findUserById(Long.parseLong(currentUser)));
+//      System.out.println(user.getUsername());
+      return "redirect:/";
+    }
+//    System.out.println(user.getUsername());
     return "signup";
   }
 
@@ -108,6 +144,7 @@ public class UserController {
     return "signup";
   }
 
+
   /**************** ### Sign Out and Empty Cookie Value ### ****************/
 
   @GetMapping("/signout")
@@ -118,23 +155,35 @@ public class UserController {
     return "redirect:/";
   }
 
-  /******************** Admin/Edit ********************/
+  /**************** ### View All Profiles ### ****************/
 
-  /*@GetMapping("/admin")
-  public ModelAndView adminDashboard() {
-    ModelAndView mv = new ModelAndView();
-    mv.setViewName("admin");
-    List<User> users = userService.getAllUsers();
-    mv.addObject("users", users);
-    return mv;
-  }*/
+//    @GetMapping("/profiles")
+//    public String showProfiles(Model model, User user) {
+//      List<User> users = userService.findAllUsers();
+//      model.addAttribute("users", users);
+//    return "profiles";
+//  }
 
-  @GetMapping("/admin")
-  public String adminDashboard(Model model, User user) {
+  @GetMapping("/profiles")
+  public String showProfiles(@ModelAttribute("user") User user, Model model,
+                             @CookieValue(value = "currentUser", required = false) String currentUser) {
     List<User> users = userService.findAllUsers();
     model.addAttribute("users", users);
-    return "admin";
+    if (currentUser != null && currentUser != "") {
+      model.addAttribute("user", userService.findUserById(Long.parseLong(currentUser)));
+      return "profiles";
+    }
+    return "profiles";
   }
+
+  /******************** Admin/Edit ********************/
+
+//  @GetMapping("/admin")
+//  public String adminDashboard(Model model, User user) {
+//    List<User> users = userService.findAllUsers();
+//    model.addAttribute("users", users);
+//    return "admin";
+//  }
 
   @GetMapping("/edit/{id}")
   public String editUser(Model model,
@@ -156,9 +205,50 @@ public class UserController {
 
   @GetMapping("/delete/{id}")
   public String deleteUser(@PathVariable long id) {
-    /*postService.deletePostsByAuthorId(id);*/
+    postService.deletePostsByAuthorId(id);
     userService.deleteUser(id);
     return "redirect:/signout";
   }
+
+  /**************** ### Template ### ****************/
+
+//  Code goes here
+
+  /**************** ### Spring Security ### ****************/
+
+//  In order to view pages restricted to "currentUser"-Cookies we have to comment the Cookies out
+//  from the methods above atm. Same goes for PostController.
+
+//  @GetMapping("/")
+//  public String viewHomePage() {
+//    return "index";
+//  }
+
+//  @GetMapping("/register")
+//  public String showRegistrationForm(Model model) {
+//    model.addAttribute("user", new User());
+//
+//    return "signup_form";
+//  }
+
+//  @PostMapping("/process_register")
+//  public String processRegister(User user) {
+//    BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
+//    String encodedPassword = passwordEncoder.encode(user.getPassword());
+//    user.setPassword(encodedPassword);
+//    user.setImg("https://via.placeholder.com/150");
+//
+//    userRepo.save(user);
+//
+//    return "register_success";
+//  }
+
+//  @GetMapping("/users")
+//  public String listUsers(Model model) {
+//    List<User> listUsers = userRepo.findAll();
+//    model.addAttribute("listUsers", listUsers);
+//
+//    return "users";
+//  }
 
 }

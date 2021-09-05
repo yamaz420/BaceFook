@@ -4,15 +4,20 @@ import javax.persistence.*;
 
 @Entity
 @Table(name = "users")
-public class User extends Identity{
+public class User extends Identity {
 
   @Id
   @GeneratedValue(strategy = GenerationType.AUTO)
   private long id;
+
+  @Column(nullable = false, unique = true, length = 45)
   private String username;
+
+  @Column(nullable = false, length = 64)
   private String password;
   private String salt;
   private String img;
+  private String title;
 
   public User() {
   }
@@ -55,6 +60,14 @@ public class User extends Identity{
 
   public void setImg(String img) {
     this.img = img;
+  }
+
+  public String getTitle() {
+    return title;
+  }
+
+  public void setTitle(String title) {
+    this.title = title;
   }
 
 }
